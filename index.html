@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Face Fun! - Petualangan Anggota Wajah (Kelas 1 SD)</title>
+  <meta name="description" content="Game edukasi interaktif untuk murid kelas 1 SD: Belajar dan menirukan pelafalan kosakata anggota wajah dalam Bahasa Inggris (eyes, ears, nose, mouth) dengan metode drag and drop seru!">
+  
+  <!-- Google Fonts: Fredoka & Nunito -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+  <!-- Floating Cheerful Background Elements -->
+  <div class="bg-bubble b1"></div>
+  <div class="bg-bubble b2"></div>
+  <div class="bg-bubble b3"></div>
+  <div class="bg-bubble b4"></div>
+  <div class="bg-sparkle s1">⭐</div>
+  <div class="bg-sparkle s2">✨</div>
+  <div class="bg-sparkle s3">🎈</div>
+  <div class="bg-sparkle s4">🌟</div>
+
+  <div class="app-container">
+    <!-- Header Bar -->
+    <header class="game-header">
+      <div class="brand">
+        <div class="logo-icon">😀</div>
+        <div class="title-group">
+          <h1 class="main-title">Face Fun Adventure!</h1>
+          <p class="subtitle">Belajar & Tirukan Kosakata Wajah • Kelas 1 SD</p>
+        </div>
+      </div>
+
+      <!-- Navigation & Game Mode Tabs -->
+      <div class="mode-tabs">
+        <button id="tab-learn" class="tab-btn active" data-mode="learn">
+          <span class="icon">📖</span>
+          <span class="label">1. Kenali & Tirukan</span>
+        </button>
+        <button id="tab-game" class="tab-btn" data-mode="game">
+          <span class="icon">🧩</span>
+          <span class="label">2. Drag & Drop Wajah</span>
+        </button>
+        <button id="tab-quiz" class="tab-btn" data-mode="quiz">
+          <span class="icon">🎧</span>
+          <span class="label">3. Tantangan Dengar</span>
+        </button>
+      </div>
+
+      <!-- Action Bar (Audio Controls & Score) -->
+      <div class="header-actions">
+        <div class="star-badge" title="Bintang yang dikumpulkan">
+          <span class="star-icon">⭐</span>
+          <span id="star-count">0</span>
+        </div>
+        <button id="btn-sound-toggle" class="btn-circle" title="Matikan/Hidupkan Suara Musik">
+          🔊
+        </button>
+        <button id="btn-help" class="btn-circle" title="Petunjuk Bermain">
+          ❓
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="game-main">
+
+      <!-- ================= MODE 1: LEARN & PRONOUNCE ================= -->
+      <section id="screen-learn" class="screen-view active">
+        <div class="screen-intro">
+          <div class="intro-badge">✨ Belajar Melafalkan Kata ✨</div>
+          <h2>Dengarkan & Tirukan Suara Bahasa Inggris!</h2>
+          <p>Klik kartu di bawah untuk mendengar cara melafalkan <b>Eyes</b>, <b>Ears</b>, <b>Nose</b>, dan <b>Mouth</b> dengan benar!</p>
+        </div>
+
+        <div class="cards-grid">
+          <!-- Card: EYES -->
+          <div class="vocab-card" data-word="eyes">
+            <div class="card-tag">Mata</div>
+            <div class="card-visual">
+              <svg class="part-svg" viewBox="0 0 100 60">
+                <defs>
+                  <radialGradient id="pupil-grad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#2c3e50" />
+                    <stop offset="60%" stop-color="#1a252f" />
+                    <stop offset="100%" stop-color="#0e171e" />
+                  </radialGradient>
+                </defs>
+                <!-- Left Eye -->
+                <ellipse cx="28" cy="30" rx="18" ry="14" fill="#ffffff" stroke="#4a5568" stroke-width="3"/>
+                <ellipse cx="30" cy="30" rx="9" ry="9" fill="url(#pupil-grad)"/>
+                <ellipse cx="33" cy="27" rx="3.5" ry="3.5" fill="#ffffff"/>
+                <ellipse cx="27" cy="33" rx="1.5" ry="1.5" fill="#ffffff"/>
+                <path d="M 12 18 Q 28 10 44 19" stroke="#4a5568" stroke-width="4" stroke-linecap="round" fill="none"/>
+                <!-- Right Eye -->
+                <ellipse cx="72" cy="30" rx="18" ry="14" fill="#ffffff" stroke="#4a5568" stroke-width="3"/>
+                <ellipse cx="70" cy="30" rx="9" ry="9" fill="url(#pupil-grad)"/>
+                <ellipse cx="73" cy="27" rx="3.5" ry="3.5" fill="#ffffff"/>
+                <ellipse cx="67" cy="33" rx="1.5" ry="1.5" fill="#ffffff"/>
+                <path d="M 56 19 Q 72 10 88 18" stroke="#4a5568" stroke-width="4" stroke-linecap="round" fill="none"/>
+              </svg>
+            </div>
+            <div class="card-info">
+              <h3 class="word-en">Eyes</h3>
+              <span class="phonetic">/ aɪz /</span>
+              <p class="meaning">Sepasang Mata</p>
+            </div>
+            <div class="card-actions">
+              <button class="btn-speak" data-word="eyes" data-speed="1">
+                🔊 Dengar
+              </button>
+              <button class="btn-slow" data-word="eyes" data-speed="0.6">
+                🐢 Lambat
+              </button>
+              <button class="btn-practice" data-word="eyes">
+                🎙️ Tirukan!
+              </button>
+            </div>
+          </div>
+
+          <!-- Card: EARS -->
+          <div class="vocab-card" data-word="ears">
+            <div class="card-tag">Telinga</div>
+            <div class="card-visual">
+              <svg class="part-svg" viewBox="0 0 100 60">
+                <!-- Left Ear -->
+                <path d="M 30 10 C 10 10, 8 45, 26 52 C 32 46, 32 18, 30 10 Z" fill="#ffb88c" stroke="#e08253" stroke-width="3"/>
+                <path d="M 24 20 C 18 24, 18 36, 24 40" stroke="#d46b3b" stroke-width="3" stroke-linecap="round" fill="none"/>
+                <!-- Right Ear -->
+                <path d="M 70 10 C 90 10, 92 45, 74 52 C 68 46, 68 18, 70 10 Z" fill="#ffb88c" stroke="#e08253" stroke-width="3"/>
+                <path d="M 76 20 C 82 24, 82 36, 76 40" stroke="#d46b3b" stroke-width="3" stroke-linecap="round" fill="none"/>
+              </svg>
+            </div>
+            <div class="card-info">
+              <h3 class="word-en">Ears</h3>
+              <span class="phonetic">/ ɪərz /</span>
+              <p class="meaning">Sepasang Telinga</p>
+            </div>
+            <div class="card-actions">
+              <button class="btn-speak" data-word="ears" data-speed="1">
+                🔊 Dengar
+              </button>
+              <button class="btn-slow" data-word="ears" data-speed="0.6">
+                🐢 Lambat
+              </button>
+              <button class="btn-practice" data-word="ears">
+                🎙️ Tirukan!
+              </button>
+            </div>
+          </div>
+
+          <!-- Card: NOSE -->
+          <div class="vocab-card" data-word="nose">
+            <div class="card-tag">Hidung</div>
+            <div class="card-visual">
+              <svg class="part-svg" viewBox="0 0 100 60">
+                <path d="M 45 10 L 42 34 C 36 34, 34 45, 45 45 C 50 45, 55 45, 57 40 C 60 35, 53 34, 48 34" fill="#ff9f75" stroke="#d46b3b" stroke-width="3" stroke-linejoin="round"/>
+                <ellipse cx="44" cy="40" rx="3" ry="2.5" fill="#a44b20"/>
+                <ellipse cx="53" cy="38" rx="2.5" ry="2" fill="#a44b20"/>
+              </svg>
+            </div>
+            <div class="card-info">
+              <h3 class="word-en">Nose</h3>
+              <span class="phonetic">/ noʊz /</span>
+              <p class="meaning">Hidung</p>
+            </div>
+            <div class="card-actions">
+              <button class="btn-speak" data-word="nose" data-speed="1">
+                🔊 Dengar
+              </button>
+              <button class="btn-slow" data-word="nose" data-speed="0.6">
+                🐢 Lambat
+              </button>
+              <button class="btn-practice" data-word="nose">
+                🎙️ Tirukan!
+              </button>
+            </div>
+          </div>
+
+          <!-- Card: MOUTH -->
+          <div class="vocab-card" data-word="mouth">
+            <div class="card-tag">Mulut</div>
+            <div class="card-visual">
+              <svg class="part-svg" viewBox="0 0 100 60">
+                <!-- Big friendly smile with teeth & tongue -->
+                <path d="M 20 22 Q 50 18 80 22 Q 50 60 20 22 Z" fill="#e84118" stroke="#b33924" stroke-width="3"/>
+                <!-- Upper teeth -->
+                <path d="M 26 23 Q 50 20 74 23 Q 50 32 26 23 Z" fill="#ffffff"/>
+                <!-- Tongue -->
+                <ellipse cx="50" cy="42" rx="16" ry="10" fill="#ff7675"/>
+                <!-- Smile border -->
+                <path d="M 16 20 C 18 16, 24 24, 28 24" stroke="#b33924" stroke-width="3" stroke-linecap="round" fill="none"/>
+                <path d="M 84 20 C 82 16, 76 24, 72 24" stroke="#b33924" stroke-width="3" stroke-linecap="round" fill="none"/>
+              </svg>
+            </div>
+            <div class="card-info">
+              <h3 class="word-en">Mouth</h3>
+              <span class="phonetic">/ maʊθ /</span>
+              <p class="meaning">Mulut Tersenyum</p>
+            </div>
+            <div class="card-actions">
+              <button class="btn-speak" data-word="mouth" data-speed="1">
+                🔊 Dengar
+              </button>
+              <button class="btn-slow" data-word="mouth" data-speed="0.6">
+                🐢 Lambat
+              </button>
+              <button class="btn-practice" data-word="mouth">
+                🎙️ Tirukan!
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="next-step-prompt">
+          <p>Sudah tahu semua bunyinya? Ayo susun wajah karakter di Game Drag & Drop!</p>
+          <button id="btn-go-to-game" class="btn-primary-large pulse-animation">
+            🚀 Mainkan Drag & Drop Sekarang!
+          </button>
+        </div>
+      </section>
+
+      <!-- ================= MODE 2: DRAG & DROP GAME ================= -->
+      <section id="screen-game" class="screen-view">
+        <div class="game-instruction-banner">
+          <div class="instruction-text">
+            <span class="bubble-icon">💡</span>
+            <span>Tarik (Drag) potongan anggota wajah di sebelah kanan, lalu letakkan (Drop) pada posisi yang tepat di wajah <b>Timi</b>!</span>
+          </div>
+          <button id="btn-listen-task" class="btn-pill">
+            🔊 Dengar Instruksi
+          </button>
+        </div>
+
+        <div class="game-playfield">
+          <!-- Left/Center: Character Face with Drop Zones -->
+          <div class="character-stage">
+            <div class="character-header-row">
+              <div class="character-switcher">
+                <button id="btn-char-timi" class="char-tab-btn active" data-char="timi">
+                  <span>👦</span> Timi
+                </button>
+                <button id="btn-char-lala" class="char-tab-btn" data-char="lala">
+                  <span>👧</span> Lala
+                </button>
+              </div>
+              <span id="face-status" class="status-pill">⭐ Belum Lengkap (0/4)</span>
+            </div>
+
+            <!-- Face Container -->
+            <div class="face-canvas-wrapper" id="face-container">
+              <!-- Cute Cartoon Base Face SVG -->
+              <svg class="face-base-svg" id="face-base-svg" viewBox="0 0 360 400" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <linearGradient id="skin-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#fff0d0" />
+                    <stop offset="100%" stop-color="#fed695" />
+                  </linearGradient>
+                  <linearGradient id="hair-timi" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#6c5ce7" />
+                    <stop offset="100%" stop-color="#4834d4" />
+                  </linearGradient>
+                  <linearGradient id="hair-lala" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#fd79a8" />
+                    <stop offset="100%" stop-color="#e84393" />
+                  </linearGradient>
+                  <linearGradient id="shirt-timi" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#00cec9" />
+                    <stop offset="100%" stop-color="#0984e3" />
+                  </linearGradient>
+                  <linearGradient id="shirt-lala" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#fdcb6e" />
+                    <stop offset="100%" stop-color="#e17055" />
+                  </linearGradient>
+                </defs>
+
+                <!-- Neck & Shoulders -->
+                <path d="M 145 305 L 145 365 L 215 365 L 215 305 Z" fill="#fbc575" />
+                <path id="shirt-path" d="M 60 365 Q 180 335 300 365 L 330 400 L 30 400 Z" fill="url(#shirt-timi)" />
+                <path d="M 155 365 Q 180 380 205 365 Z" fill="#ffffff" />
+
+                <!-- Hair Back (Changes based on Character) -->
+                <g id="hair-back-group">
+                  <!-- Timi Hair Back -->
+                  <ellipse cx="180" cy="180" rx="142" ry="142" fill="url(#hair-timi)" />
+                </g>
+
+                <!-- Main Head Base (No Face features yet) -->
+                <ellipse cx="180" cy="190" rx="120" ry="128" fill="url(#skin-gradient)" stroke="#f39c12" stroke-width="4"/>
+
+                <!-- Hair Front Bangs -->
+                <g id="hair-front-group">
+                  <path d="M 72 135 C 90 70, 270 70, 288 135 C 265 110, 225 110, 205 130 C 185 110, 150 110, 130 130 C 110 115, 88 120, 72 135 Z" fill="url(#hair-timi)"/>
+                </g>
+
+                <!-- Cheeks (Soft blushing pink) -->
+                <ellipse cx="108" cy="235" rx="16" ry="10" fill="#ff7675" opacity="0.45"/>
+                <ellipse cx="252" cy="235" rx="16" ry="10" fill="#ff7675" opacity="0.45"/>
+
+                <!-- Sparkle Cheek Stars -->
+                <circle cx="108" cy="233" r="2" fill="#ffffff" opacity="0.8"/>
+                <circle cx="252" cy="233" r="2" fill="#ffffff" opacity="0.8"/>
+              </svg>
+
+              <!-- Interactive Non-Overlapping Drop Zones -->
+              <!-- Drop Zone: LEFT EAR -->
+              <div class="drop-zone zone-ear" id="zone-ear-left" data-accept="ears" title="Letakkan EARS di sini">
+                <div class="zone-outline">
+                  <span class="zone-icon">👂</span>
+                  <span class="zone-text">Ear</span>
+                </div>
+                <div class="dropped-content"></div>
+              </div>
+
+              <!-- Drop Zone: RIGHT EAR -->
+              <div class="drop-zone zone-ear" id="zone-ear-right" data-accept="ears" title="Letakkan EARS di sini">
+                <div class="zone-outline">
+                  <span class="zone-icon">👂</span>
+                  <span class="zone-text">Ear</span>
+                </div>
+                <div class="dropped-content"></div>
+              </div>
+
+              <!-- Drop Zone: EYES -->
+              <div class="drop-zone" id="zone-eyes" data-accept="eyes" title="Letakkan EYES di sini">
+                <div class="zone-outline">
+                  <span class="zone-icon">👀</span>
+                  <span class="zone-text">Eyes (Mata)</span>
+                </div>
+                <div class="dropped-content"></div>
+              </div>
+
+              <!-- Drop Zone: NOSE -->
+              <div class="drop-zone" id="zone-nose" data-accept="nose" title="Letakkan NOSE di sini">
+                <div class="zone-outline">
+                  <span class="zone-icon">👃</span>
+                  <span class="zone-text">Nose (Hidung)</span>
+                </div>
+                <div class="dropped-content"></div>
+              </div>
+
+              <!-- Drop Zone: MOUTH -->
+              <div class="drop-zone" id="zone-mouth" data-accept="mouth" title="Letakkan MOUTH di sini">
+                <div class="zone-outline">
+                  <span class="zone-icon">👄</span>
+                  <span class="zone-text">Mouth (Mulut)</span>
+                </div>
+                <div class="dropped-content"></div>
+              </div>
+
+            </div>
+
+            <!-- Face Action Controls -->
+            <div class="face-controls">
+              <button id="btn-reset-face" class="btn-secondary">
+                🔄 Reset Wajah
+              </button>
+              <button id="btn-speak-all" class="btn-primary" disabled>
+                🎉 Ucapkan Semua Anggota Wajah!
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Draggable Parts Tray -->
+          <div class="parts-tray-container">
+            <div class="tray-header">
+              <h3>Kotak Bagian Wajah</h3>
+              <p>Sentuh & geser ke wajah karakter</p>
+            </div>
+
+            <div class="parts-tray" id="parts-tray">
+              <!-- Draggable: EYES -->
+              <div class="drag-item" draggable="true" id="item-eyes" data-part="eyes" tabindex="0">
+                <div class="item-visual">
+                  <svg viewBox="0 0 100 50">
+                    <ellipse cx="28" cy="25" rx="18" ry="14" fill="#ffffff" stroke="#4a5568" stroke-width="3"/>
+                    <ellipse cx="30" cy="25" rx="9" ry="9" fill="#1a252f"/>
+                    <ellipse cx="33" cy="22" rx="3.5" ry="3.5" fill="#ffffff"/>
+                    <path d="M 12 13 Q 28 5 44 14" stroke="#4a5568" stroke-width="4" stroke-linecap="round" fill="none"/>
+                    
+                    <ellipse cx="72" cy="25" rx="18" ry="14" fill="#ffffff" stroke="#4a5568" stroke-width="3"/>
+                    <ellipse cx="70" cy="25" rx="9" ry="9" fill="#1a252f"/>
+                    <ellipse cx="73" cy="22" rx="3.5" ry="3.5" fill="#ffffff"/>
+                    <path d="M 56 14 Q 72 5 88 13" stroke="#4a5568" stroke-width="4" stroke-linecap="round" fill="none"/>
+                  </svg>
+                </div>
+                <div class="item-footer">
+                  <div class="item-labels">
+                    <span class="item-name">Eyes</span>
+                    <span class="item-sub">Mata</span>
+                  </div>
+                  <button class="btn-mini-audio" data-speak="eyes" title="Dengar lafal Eyes">🔊</button>
+                </div>
+              </div>
+
+              <!-- Draggable: EARS -->
+              <div class="drag-item" draggable="true" id="item-ears" data-part="ears" tabindex="0">
+                <div class="item-visual">
+                  <svg viewBox="0 0 110 50">
+                    <!-- Left ear preview -->
+                    <path d="M 32 8 C 14 8, 12 40, 28 46 C 34 40, 34 15, 32 8 Z" fill="#ffd572" stroke="#e08253" stroke-width="3"/>
+                    <path d="M 26 17 C 20 20, 20 30, 26 34" stroke="#d46b3b" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                    <!-- Right ear preview -->
+                    <path d="M 78 8 C 96 8, 98 40, 82 46 C 76 40, 76 15, 78 8 Z" fill="#ffd572" stroke="#e08253" stroke-width="3"/>
+                    <path d="M 84 17 C 90 20, 90 30, 84 34" stroke="#d46b3b" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                  </svg>
+                </div>
+                <div class="item-footer">
+                  <div class="item-labels">
+                    <span class="item-name">Ears</span>
+                    <span class="item-sub">Telinga</span>
+                  </div>
+                  <button class="btn-mini-audio" data-speak="ears" title="Dengar lafal Ears">🔊</button>
+                </div>
+              </div>
+
+              <!-- Draggable: NOSE -->
+              <div class="drag-item" draggable="true" id="item-nose" data-part="nose" tabindex="0">
+                <div class="item-visual">
+                  <svg viewBox="0 0 60 50">
+                    <path d="M 28 8 L 24 30 C 18 30, 16 42, 28 42 C 34 42, 39 42, 42 36 C 45 31, 38 30, 32 30" fill="#ff9f75" stroke="#d46b3b" stroke-width="3" stroke-linejoin="round"/>
+                    <ellipse cx="26" cy="36" rx="2.5" ry="2" fill="#a44b20"/>
+                    <ellipse cx="35" cy="34" rx="2" ry="1.5" fill="#a44b20"/>
+                  </svg>
+                </div>
+                <div class="item-footer">
+                  <div class="item-labels">
+                    <span class="item-name">Nose</span>
+                    <span class="item-sub">Hidung</span>
+                  </div>
+                  <button class="btn-mini-audio" data-speak="nose" title="Dengar lafal Nose">🔊</button>
+                </div>
+              </div>
+
+              <!-- Draggable: MOUTH -->
+              <div class="drag-item" draggable="true" id="item-mouth" data-part="mouth" tabindex="0">
+                <div class="item-visual">
+                  <svg viewBox="0 0 90 50">
+                    <path d="M 15 16 Q 45 12 75 16 Q 45 46 15 16 Z" fill="#e84118" stroke="#b33924" stroke-width="3"/>
+                    <path d="M 22 17 Q 45 14 68 17 Q 45 26 22 17 Z" fill="#ffffff"/>
+                    <ellipse cx="45" cy="32" rx="14" ry="7" fill="#ff7675"/>
+                  </svg>
+                </div>
+                <div class="item-footer">
+                  <div class="item-labels">
+                    <span class="item-name">Mouth</span>
+                    <span class="item-sub">Mulut</span>
+                  </div>
+                  <button class="btn-mini-audio" data-speak="mouth" title="Dengar lafal Mouth">🔊</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mobile / Touch Helper -->
+            <div class="touch-hint">
+              <span class="hint-icon">👆</span>
+              <span>Bisa juga klik item lalu klik kotak tujuannya di wajah!</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= MODE 3: AUDIO LISTENING QUIZ ================= -->
+      <section id="screen-quiz" class="screen-view">
+        <div class="quiz-container">
+          <div class="quiz-card-main">
+            <div class="quiz-badge">🎧 Tantangan Dengar & Tebak</div>
+            <h2 id="quiz-question-title">Dengarkan suaranya, pilih anggota wajah yang tepat!</h2>
+
+            <div class="quiz-speaker-box">
+              <button id="btn-quiz-play-audio" class="btn-speaker-giant pulse-animation">
+                <span class="speaker-icon">🔊</span>
+                <span class="speaker-label">Klik untuk Dengar Suara</span>
+              </button>
+              <div class="quiz-hint-text" id="quiz-hint-text">
+                "Sentuh tombol di atas untuk mendengar kosakata!"
+              </div>
+            </div>
+
+            <div class="quiz-options-grid" id="quiz-options">
+              <!-- Dynamically populated or static cards -->
+              <button class="quiz-opt-btn" data-answer="eyes">
+                <div class="opt-emoji">👀</div>
+                <div class="opt-en">Eyes</div>
+                <div class="opt-id">Mata</div>
+              </button>
+              <button class="quiz-opt-btn" data-answer="ears">
+                <div class="opt-emoji">👂</div>
+                <div class="opt-en">Ears</div>
+                <div class="opt-id">Telinga</div>
+              </button>
+              <button class="quiz-opt-btn" data-answer="nose">
+                <div class="opt-emoji">👃</div>
+                <div class="opt-en">Nose</div>
+                <div class="opt-id">Hidung</div>
+              </button>
+              <button class="quiz-opt-btn" data-answer="mouth">
+                <div class="opt-emoji">👄</div>
+                <div class="opt-en">Mouth</div>
+                <div class="opt-id">Mulut</div>
+              </button>
+            </div>
+
+            <div class="quiz-feedback-box" id="quiz-feedback">
+              <!-- Feedback messages will appear here -->
+            </div>
+
+            <div class="quiz-progress-bar">
+              <div class="progress-info">
+                <span>Soal: <b id="quiz-current-num">1</b> / 4</span>
+                <span>Skor: <b id="quiz-score-val">0</b> Poin</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" id="quiz-progress-fill" style="width: 25%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ================= MODAL: PRACTICE REPEAT (TIRUKAN SUARA) ================= -->
+    <div class="modal-overlay" id="practice-modal">
+      <div class="modal-card">
+        <button class="modal-close" id="btn-close-modal">✖</button>
+        <div class="modal-header">
+          <span class="modal-icon">🎙️</span>
+          <h3>Ayo Tirukan Pelafalan!</h3>
+        </div>
+
+        <div class="practice-word-display">
+          <div class="p-emoji" id="p-emoji">👀</div>
+          <h2 class="p-word" id="p-word">Eyes</h2>
+          <span class="p-phonetic" id="p-phonetic">/ aɪz /</span>
+          <span class="p-meaning" id="p-meaning">Mata</span>
+        </div>
+
+        <div class="practice-steps">
+          <div class="step-item">
+            <span class="step-num">1</span>
+            <button id="btn-modal-listen" class="btn-step">
+              🔊 Dengarkan Lagi
+            </button>
+          </div>
+          <div class="step-item">
+            <span class="step-num">2</span>
+            <button id="btn-modal-mic" class="btn-step btn-mic-record">
+              🎤 Coba Lafalkan Sekarang!
+            </button>
+          </div>
+        </div>
+
+        <div class="recording-indicator" id="recording-indicator">
+          <div class="pulse-ring"></div>
+          <span>Sedang mendengarkan suaramu... Ucapkan dengan lantang!</span>
+        </div>
+
+        <div class="practice-result" id="practice-result">
+          <!-- Live result or success celebration -->
+        </div>
+
+        <div class="manual-check-wrapper">
+          <p class="small-text">Atau klik jika kamu sudah menirukan pelafalannya:</p>
+          <button id="btn-confirm-practice" class="btn-success-pill">
+            🌟 Saya Sudah Tirukan dengan Bagus!
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= MODAL: SUCCESS CELEBRATION ================= -->
+    <div class="modal-overlay" id="celebration-modal">
+      <div class="modal-card celebration-card">
+        <div class="trophy-bounce">🏆</div>
+        <h2>HEBAT SEKALI! 🎉</h2>
+        <p class="celeb-subtitle">Wajah Timi sekarang sudah lengkap dan tersenyum ceria!</p>
+        
+        <div class="badge-award">
+          <div class="badge-inner">
+            <span class="badge-icon">🎖️</span>
+            <h4>Juara Kosakata Wajah</h4>
+            <p>Murid Hebat Kelas 1 SD</p>
+          </div>
+        </div>
+
+        <div class="celeb-words-recap">
+          <div class="recap-chip">👀 Eyes</div>
+          <div class="recap-chip">👂 Ears</div>
+          <div class="recap-chip">👃 Nose</div>
+          <div class="recap-chip">👄 Mouth</div>
+        </div>
+
+        <div class="celeb-actions">
+          <button id="btn-replay-game" class="btn-primary-large">
+            🔄 Main Lagi
+          </button>
+          <button id="btn-go-quiz" class="btn-secondary-large">
+            🎧 Lanjut ke Tantangan Dengar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= MODAL: HELP / PETUNJUK ================= -->
+    <div class="modal-overlay" id="help-modal">
+      <div class="modal-card help-card">
+        <button class="modal-close" id="btn-close-help">✖</button>
+        <div class="modal-header">
+          <span class="modal-icon">📖</span>
+          <h3>Petunjuk Guru & Murid</h3>
+        </div>
+        <div class="help-content">
+          <div class="help-row">
+            <span class="h-icon">1️⃣</span>
+            <div>
+              <strong>Mode Kenali & Tirukan:</strong>
+              <p>Dengarkan suara bahasa Inggris asli. Klik tombol <b>Tirukan!</b> untuk melatih pengucapan anggota wajah.</p>
+            </div>
+          </div>
+          <div class="help-row">
+            <span class="h-icon">2️⃣</span>
+            <div>
+              <strong>Mode Drag & Drop:</strong>
+              <p>Tarik Eyes, Ears, Nose, dan Mouth ke tempatnya pada wajah Timi. Setelah dipasang, suara kata akan otomatis terdengar!</p>
+            </div>
+          </div>
+          <div class="help-row">
+            <span class="h-icon">3️⃣</span>
+            <div>
+              <strong>Mode Tantangan Dengar:</strong>
+              <p>Dengarkan tebakan suara misterius dan pilih gambar yang sesuai untuk menguji hafalan anak.</p>
+            </div>
+          </div>
+        </div>
+        <button id="btn-help-ok" class="btn-primary full-width">Saya Mengerti! 👍</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
